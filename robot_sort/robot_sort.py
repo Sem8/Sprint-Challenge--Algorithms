@@ -93,11 +93,17 @@ class SortingRobot:
         return self._light == "ON"
 
     def sort(self):
+
         """
         Sort the robot's list.
         """
-        # Fill this out
-        pass
+        while self.can_move_right() and self.can_move_left:
+            # self.move_right()
+            if self.compare_item() == 1:
+                self.swap_item()
+            else:
+                self.move_right()
+        # pass
 
 
 if __name__ == "__main__":
@@ -110,3 +116,7 @@ if __name__ == "__main__":
 
     robot.sort()
     print(robot._list)
+
+    '''
+    I may have to use bubble sort or selection sort here since we can't assign variables and those are the sorts we did in place. 
+    '''
