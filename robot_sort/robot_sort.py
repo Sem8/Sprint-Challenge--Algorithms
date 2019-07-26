@@ -93,11 +93,43 @@ class SortingRobot:
         return self._light == "ON"
 
     def sort(self):
+
         """
         Sort the robot's list.
         """
-        # Fill this out
-        pass
+        # use it as boolean to break out of main loop
+        self.set_light_on()
+
+# Iniital swap to get None out of Robot's hand to have a comparison while looping
+        self.swap_item()
+
+# First loop to mimic while True
+        while self.light_is_on():
+
+# Make robot go back to start position each time loop runs
+            while self.can_move_left():
+                self.move_left()
+            # print(self._list)
+
+# Keep comparing and swapping till None can't be swapped anymore at end of loop
+            while self.compare_item() != None:
+                if self.compare_item() == -1:
+                    self.swap_item()
+                self.move_right()
+            # print(self._list)
+# Put None back into Robot's hand to get rid of None at end
+            self.swap_item()
+            # print(self._list)
+
+            if not self.can_move_right():
+                self.set_light_off()
+
+            else:
+                self.move_right()
+                self.swap_item()
+
+        return
+
 
 
 if __name__ == "__main__":
@@ -110,3 +142,16 @@ if __name__ == "__main__":
 
     robot.sort()
     print(robot._list)
+
+    '''
+    - I may have to use bubble sort or selection sort here since we can't assign variables and those are the sorts we did in place.
+    I'll choose bubble sort, that seems to be more directly related to the robot's move functions here
+
+    - Move through the list left to right
+    - Swap to takt the first item, leaving None at the first position, and robot is no longer holding none.
+    - Inside first while loop, check if robot can move left, if true, robot moves back one, keep looping till at start position.
+    - Check if item in robot's hand is less than item at list position, if yes then swap with swap_item() method and then move right.
+    - When robot reaches end, the only thing left in robot's hand is None and can't swap anything anymore, break out of second loop.
+    - After breaking out of second loop, have to swap again to put None into robot's hands.
+    - When robot can no longer move right or 'self.can_move_right() is false' set light off to break out of loop. Otherwise, move right and swap item.
+    '''
